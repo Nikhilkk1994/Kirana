@@ -12,4 +12,4 @@
 4. mkdir ENV, cd ENV
 5. Create a new virtualenv: virtualenv yourenv -p python3.7
 6. Activate virtualenv: source yourenv/bin/activate
-7. run the requirement.txt file in Project folder
+7. run the requirement.txt file in Project folder (pip install -r requirement.txt)
