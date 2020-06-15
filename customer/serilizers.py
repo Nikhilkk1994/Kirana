@@ -36,7 +36,6 @@ class UserLoginSerializer(rest_serializers.Serializer):
 
     def validate(self, attrs):
         user = customer_models.User.objects.filter(mobile=attrs.get('mobile')).first()
-        print(user.check_password(attrs.get('password')))
         if not user or not user.check_password(attrs.get('password')):
             raise rest_exceptions.ValidationError(_('Mobile/Password is incorrect.'))
         attrs['user'] = user
