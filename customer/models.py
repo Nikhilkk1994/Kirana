@@ -57,6 +57,7 @@ class UserToAddress(models.Model):
     class Meta:
         verbose_name = _('Address User')
         verbose_name_plural = _('Address Users')
+        unique_together = ('user', 'address',)
 
     def __str__(self):
-        return self.user.id + ' ' + 'address'
+        return str(self.user.mobile) + ' ' + self.address.area_house_number
