@@ -22,3 +22,10 @@ class UserLogin(rest_mixins.CreateModelMixin, GenericViewSet):
             customer_serilizers.BaseUserSerializer(instance=user).data,
             status=http_status.HTTP_201_CREATED
         )
+
+
+class UserSignUp(rest_mixins.CreateModelMixin, GenericViewSet):
+    """
+    View Set for user sign Up
+    """
+    serializer_class = customer_serilizers.UserSignSerializer

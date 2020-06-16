@@ -40,3 +40,29 @@ class UserLoginSerializer(rest_serializers.Serializer):
             raise rest_exceptions.ValidationError(_('Mobile/Password is incorrect.'))
         attrs['user'] = user
         return attrs
+
+
+class UserSignSerializer(rest_serializers.ModelSerializer):
+    """
+    Serializer for User Sign Up
+    """
+    access_token = rest_serializers.SerializerMethodField()
+
+    class Meta:
+        model = customer_models.User
+        fields = ('mobile', 'first_name', 'last_name', 'password', 'access_token',)
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
+
+    def get_access_token(self, instance):
+        return Token.objects.get(user=instance).key
+
+    def create(self, validated_data):
+        """
+        Create the User Object
+        """
+        instance = customer_models.User.objects.create(**validated_data)
+        instance.set_password(validated_data.get('password'))
+        instance.save()
+        return instance
