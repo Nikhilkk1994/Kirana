@@ -9,6 +9,7 @@ from rest_framework.authtoken.models import Token
 
 from customer.manager import UserManager
 from customer.model_validator import validate_mobile
+from address.models import Address
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -18,6 +19,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         _('staff status'), default=False, help_text=_('Designates whether the user can log into this admin site.')
     )
+    address = models.ManyToManyField(Address, related_name='address', through='UserToAddress', blank=True)
 
     objects = UserManager()
 
@@ -43,3 +45,11 @@ class User(AbstractBaseUser, PermissionsMixin):
 def make_token(sender, instance, created, **kwargs):
     if created:
         Token.objects.create(user=instance)
+
+
+class UserToAddress(models.Model):
+    """
+    Model represent the M:M relation within user and Address
+    """
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)

@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-from customer.models import User
+from customer.models import User, UserToAddress
 
 
 class UserCreationForm(forms.ModelForm):
@@ -78,3 +78,4 @@ class MyUserAdmin(UserAdmin):
 
 
 admin.site.register(User, MyUserAdmin)
+admin.site.register(UserToAddress)
