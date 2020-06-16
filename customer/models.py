@@ -53,3 +53,10 @@ class UserToAddress(models.Model):
     """
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = _('Address User')
+        verbose_name_plural = _('Address Users')
+
+    def __str__(self):
+        return self.user.id + ' ' + 'address'
