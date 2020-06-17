@@ -19,7 +19,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(
         _('staff status'), default=False, help_text=_('Designates whether the user can log into this admin site.')
     )
-    address = models.ManyToManyField(Address, related_name='address', through='UserToAddress', blank=True)
+    address = models.ManyToManyField(Address, related_name='user', through='UserToAddress', blank=True)
 
     objects = UserManager()
 
