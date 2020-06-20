@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from rest_framework import mixins as rest_mixins
 from rest_framework import status as http_status
 from rest_framework.response import Response

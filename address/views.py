@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from django.shortcuts import get_object_or_404
 
 from rest_framework import mixins as rest_mixins
@@ -12,7 +10,6 @@ from rest_framework import permissions as rest_permissions
 from address import models as address_models
 from address import serializer as address_serializer
 from address import mixins as address_mixins
-from customer import models as customer_address
 
 
 class UserAddressView(

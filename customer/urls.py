@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 from rest_framework import routers
 
 from customer import views as api_views
