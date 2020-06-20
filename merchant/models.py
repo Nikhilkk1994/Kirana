@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from customer import models as customer_models
 from customer.model_validator import validate_mobile
 from address import models as address_models
+from product import models as product_models
 
 
 class Merchant(models.Model):
@@ -21,3 +22,19 @@ class Merchant(models.Model):
 
     def __str__(self):
         return self.store_name
+
+
+class MerchantProducts(models.Model):
+    """
+    Merchant Products
+    """
+    product = models.ForeignKey(product_models.Product, on_delete=models.CASCADE)
+    merchant = models.ForeignKey(Merchant, on_delete=models.CASCADE)
+    max_quantity = models.IntegerField(_('Max quantity can added to cart'), blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('Merchant Product')
+        verbose_name_plural = _('Merchant Products')
+
+    def __str__(self):
+        return self.product.name + ' ' + self.merchant.store_name
