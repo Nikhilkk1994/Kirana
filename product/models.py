@@ -43,3 +43,24 @@ class Product(models.Model):
              update_fields=None):
         self.name = self.name.lower()
         super(Product, self).save(force_insert, force_update, using, update_fields)
+
+
+class ProductPersonality(models.Model):
+    """
+    Model for the Product Config
+    """
+    ML, GRAM, PIECE = 1, 2, 3
+    _UNITS = (
+        (ML, _('Mil Liter')),
+        (GRAM, _('Grams')),
+        (PIECE, _('Pieces'))
+    )
+    quantity = models.IntegerField(_('Quantity of Product Item'), blank=True, null=True)
+    unit = models.IntegerField(choices=_UNITS, default=ML, verbose_name=_('Units of Product'), db_index=True)
+
+    class Meta:
+        verbose_name = _('Product Personality')
+        verbose_name_plural = _('Product Personality')
+
+    def __str__(self):
+        return 'Quantity:' + ' ' + str(self.quantity) + ' ' + 'Units: ' + str(self.get_unit_display())

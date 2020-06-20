@@ -38,3 +38,20 @@ class MerchantProducts(models.Model):
 
     def __str__(self):
         return self.product.name + ' ' + self.merchant.store_name
+
+
+class MerchantProductPersonality(models.Model):
+    """
+    Model for Merchant Product Personality
+    """
+    merchant_product = models.ForeignKey(MerchantProducts, on_delete=models.CASCADE)
+    product_personality = models.ForeignKey(product_models.ProductPersonality, on_delete=models.CASCADE)
+    price = models.PositiveIntegerField(_('Price of Product'))
+    inventory = models.PositiveIntegerField(_('Inventory of Product'))
+
+    class Meta:
+        verbose_name = _('Merchant Product Personality')
+        verbose_name_plural = _('Merchant Products Personality')
+
+    def __str__(self):
+        return self.merchant_product.product.name + ' ' + self.merchant_product.merchant.store_name
