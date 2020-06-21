@@ -37,7 +37,7 @@ class Product(models.Model):
         verbose_name_plural = _('Products')
 
     def __str__(self):
-        return self.name + ' ' + str(self.id)
+        return self.name
 
     def save(self, force_insert=False, force_update=False, using=None,
              update_fields=None):

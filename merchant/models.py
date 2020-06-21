@@ -36,6 +36,7 @@ class MerchantProducts(models.Model):
     class Meta:
         verbose_name = _('Merchant Product')
         verbose_name_plural = _('Merchant Products')
+        unique_together = ('product', 'merchant',)
 
     def __str__(self):
         return self.product.name + ' ' + self.merchant.store_name
