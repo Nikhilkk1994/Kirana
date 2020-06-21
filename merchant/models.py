@@ -7,6 +7,7 @@ from address import models as address_models
 from product import models as product_models
 
 
+# TODO Add Image Field
 class Merchant(models.Model):
     """
     Merchant model
