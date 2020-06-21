@@ -1,15 +1,21 @@
+from rest_framework.decorators import action
 from rest_framework import mixins as rest_mixins
+from rest_framework.response import Response
 from rest_framework.viewsets import GenericViewSet
 
 from merchant import models as merchant_models
 from merchant import serializer as merchant_serializer
+from address.mixins import ActionSpecificSerializerMixin
 
 
-class MerchantView(rest_mixins.ListModelMixin, GenericViewSet):
+class MerchantView(rest_mixins.ListModelMixin, ActionSpecificSerializerMixin, GenericViewSet):
     """
     View to get the list of the Merchant.
     """
-    serializer_class = merchant_serializer.MerchantSerializer
+    serializer_classes = {
+        'list': merchant_serializer.MerchantSerializer,
+        'products': merchant_serializer.MerchantMenuSerializer
+    }
 
     def get_queryset(self):
         """
@@ -25,3 +31,9 @@ class MerchantView(rest_mixins.ListModelMixin, GenericViewSet):
                 ).values_list('merchant', flat=True)
             )
         return queryset
+
+    @action(methods=['get'], detail=True,)
+    def products(self, request, pk=None):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data)
