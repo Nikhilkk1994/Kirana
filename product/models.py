@@ -8,6 +8,7 @@ class Category(models.Model):
     Model to create the category table
     """
     name = models.CharField(_('Category Name'), max_length=50, unique=True)
+    description = models.CharField(_('Description'), max_length=100, null=True, blank=True)
     url = models.URLField(_('Url for Category'), null=True, blank=True)
 
     class Meta:

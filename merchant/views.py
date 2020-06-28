@@ -8,12 +8,15 @@ from merchant import serializer as merchant_serializer
 from address.mixins import ActionSpecificSerializerMixin
 
 
-class MerchantView(rest_mixins.ListModelMixin, ActionSpecificSerializerMixin, GenericViewSet):
+class MerchantView(
+    rest_mixins.ListModelMixin, rest_mixins.RetrieveModelMixin, ActionSpecificSerializerMixin, GenericViewSet
+):
     """
     View to get the list of the Merchant.
     """
     serializer_classes = {
         'list': merchant_serializer.MerchantSerializer,
+        'retrieve': merchant_serializer.MerchantSerializer,
         'products': merchant_serializer.MerchantMenuSerializer
     }
 

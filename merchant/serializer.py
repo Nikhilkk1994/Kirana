@@ -36,7 +36,7 @@ class MerchantProductPersonalitySerializer(rest_serializers.ModelSerializer):
 
     class Meta:
         model = merchant_models.MerchantProductPersonality
-        fields = ('id', 'product_personality', 'price', 'inventory',)
+        fields = ('product_personality', 'price', 'inventory',)
 
 
 class MerchantProductSerializer(rest_serializers.ModelSerializer):
@@ -48,23 +48,23 @@ class MerchantProductSerializer(rest_serializers.ModelSerializer):
 
     class Meta:
         model = merchant_models.MerchantProducts
-        fields = ('id', 'max_quantity', 'product', 'configuration',)
+        fields = ('id', 'product', 'configuration',)
 
     def get_configuration(self, instance):
         queryset = merchant_models.MerchantProductPersonality.objects.filter(merchant_product__id=instance.id)
         return MerchantProductPersonalitySerializer(queryset, many=True).data
 
 
-class MerchantMenuSerializer(MerchantSerializer):
+class MerchantMenuSerializer(rest_serializers.Serializer):
     """
     Serializer for Merchant Product
     """
-    menu = rest_serializers.SerializerMethodField()
+    products = rest_serializers.SerializerMethodField()
 
     class Meta:
         model = merchant_models.Merchant
-        fields = MerchantSerializer.Meta.fields + ('menu',)
+        fields = ('products',)
 
-    def get_menu(self, instance):
+    def get_products(self, instance):
         queryset = merchant_models.MerchantProducts.objects.filter(merchant__id=instance.id)
         return MerchantProductSerializer(queryset, many=True).data

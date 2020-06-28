@@ -6,7 +6,7 @@ from merchant import views as api_views
 
 router = routers.SimpleRouter()
 
-router.register(r'merchant', api_views.MerchantView, basename='merchants')
+router.register(r'merchants', api_views.MerchantView, basename='merchants')
 
 urlpatterns = []
 
