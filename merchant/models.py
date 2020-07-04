@@ -16,6 +16,7 @@ class Merchant(models.Model):
     store_name = models.CharField(_('Store Name'), max_length=50, unique=True)
     mobile = models.IntegerField(_('Mobile Number of Shop'), validators=[validate_mobile])
     address = models.OneToOneField(address_models.Address, on_delete=models.CASCADE)
+    serve_zip_code = models.ManyToManyField(address_models.AddressDetail, related_name='merchants', blank=True)
 
     class Meta:
         verbose_name = _('Merchant')
