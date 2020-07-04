@@ -2,7 +2,6 @@ from rest_framework import serializers as rest_serializers
 
 from merchant import models as merchant_models
 from customer import models as customer_models
-from product import models as product_models
 from address import serializer as address_serializer
 from product import serializer as product_serializer
 
