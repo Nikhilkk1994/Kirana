@@ -2,13 +2,13 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 
-# TODO have to add the Image field
 class Category(models.Model):
     """
     Model to create the category table
     """
     name = models.CharField(_('Category Name'), max_length=50, unique=True)
     description = models.CharField(_('Description'), max_length=100, null=True, blank=True)
+    image = models.ImageField(upload_to='media/category/', null=True, max_length=255)
     url = models.URLField(_('Url for Category'), null=True, blank=True)
 
     class Meta:
@@ -24,7 +24,6 @@ class Category(models.Model):
         super(Category, self).save(force_insert, force_update, using, update_fields)
 
 
-# TODO have to add the Image field
 class Product(models.Model):
     """
     Model to create the product table
@@ -32,6 +31,7 @@ class Product(models.Model):
     name = models.CharField(_('Product Name'), max_length=50, unique=True)
     description = models.CharField(_('Description'), max_length=50, blank=True, null=True)
     category = models.ManyToManyField(Category, related_name='product')
+    image = models.ImageField(upload_to='media/product/', null=True, max_length=255)
 
     class Meta:
         verbose_name = _('Product')

@@ -7,9 +7,16 @@ class CategorySerializer(rest_serializers.ModelSerializer):
     """
     Serializer for category
     """
+    image = rest_serializers.SerializerMethodField()
+
     class Meta:
         model = product_models.Category
-        fields = ('id', 'name', 'url', 'description',)
+        fields = ('id', 'name', 'url', 'description', 'image',)
+
+    def get_image(self, instance):
+        if instance.image:
+            return instance.image.url
+        return None
 
 
 class ProductSerializer(rest_serializers.ModelSerializer):
@@ -17,10 +24,16 @@ class ProductSerializer(rest_serializers.ModelSerializer):
     Serializer for Product
     """
     category = CategorySerializer(many=True, read_only=True)
+    image = rest_serializers.SerializerMethodField()
 
     class Meta:
         model = product_models.Product
-        fields = ('id', 'name', 'description', 'category',)
+        fields = ('id', 'name', 'description', 'category', 'image',)
+
+    def get_image(self, instance):
+        if instance.image:
+            return instance.image.url
+        return None
 
 
 class ProductPersonalitySerializer(rest_serializers.ModelSerializer):

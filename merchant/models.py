@@ -7,7 +7,6 @@ from address import models as address_models
 from product import models as product_models
 
 
-# TODO Add Image Field
 class Merchant(models.Model):
     """
     Merchant model
@@ -17,6 +16,7 @@ class Merchant(models.Model):
     mobile = models.IntegerField(_('Mobile Number of Shop'), validators=[validate_mobile])
     address = models.OneToOneField(address_models.Address, on_delete=models.CASCADE)
     serve_zip_code = models.ManyToManyField(address_models.AddressDetail, related_name='merchants', blank=True)
+    image = models.ImageField(max_length=255, upload_to='media/merchant/', blank=True, null=True)
 
     class Meta:
         verbose_name = _('Merchant')

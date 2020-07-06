@@ -17,9 +17,11 @@ from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
+from django.conf.urls.static import static
 
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from django.conf import settings
 
 from customer import urls as customer_urls
 from address import urls as address_urls
@@ -45,4 +47,4 @@ urlpatterns = [
     url(r'^api/', include(merchant_urls)),
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

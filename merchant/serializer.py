@@ -21,10 +21,16 @@ class MerchantSerializer(rest_serializers.ModelSerializer):
     """
     owner = BaseUserSerializer(read_only=True)
     address = address_serializer.UserAddressSerializer(read_only=True)
+    image = rest_serializers.SerializerMethodField()
 
     class Meta:
         model = merchant_models.Merchant
-        fields = ('id', 'store_name', 'mobile', 'address', 'owner',)
+        fields = ('id', 'store_name', 'mobile', 'address', 'owner', 'image',)
+
+    def get_image(self, instance):
+        if instance.image:
+            return instance.image.url
+        return None
 
 
 class MerchantProductPersonalitySerializer(rest_serializers.ModelSerializer):

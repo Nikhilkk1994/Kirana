@@ -25,7 +25,7 @@ SECRET_KEY = ')p*q9z9e4&4r_*pt&va(n(bqsyjb^2$s(pon0@fa%bq+el__1@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.18', 'localhost']
+ALLOWED_HOSTS = ['192.168.1.18', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -99,7 +99,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 2,
+    'PAGE_SIZE': 5,
     'PAGINATE_BY_PARAM': 'page_size'
 }
 
@@ -152,3 +152,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/'
