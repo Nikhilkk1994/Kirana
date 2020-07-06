@@ -5,8 +5,6 @@ from rest_framework.viewsets import GenericViewSet
 from rest_framework import pagination as rest_pagination
 from rest_framework import exceptions as rest_exceptions
 
-from django.core.paginator import InvalidPage
-
 from merchant import models as merchant_models
 from merchant import serializer as merchant_serializer
 from address.mixins import ActionSpecificSerializerMixin
@@ -29,6 +27,7 @@ class MerchantView(
         'list': merchant_serializer.MerchantSerializer,
         'retrieve': merchant_serializer.MerchantSerializer
     }
+    pagination_class = MerchantProductsPagination
 
     def get_queryset(self):
         """

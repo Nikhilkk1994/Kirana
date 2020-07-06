@@ -25,6 +25,7 @@ class UserAddressView(
         'create': address_serializer.UserAddressCreateSerializer
     }
     lookup_field = 'address_id'
+    pagination_class = None
 
     def get_queryset(self):
         return address_models.Address.objects.filter(user__id=self.request.user.id)
