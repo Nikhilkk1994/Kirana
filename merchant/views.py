@@ -6,6 +6,7 @@ from rest_framework import pagination as rest_pagination
 from rest_framework import exceptions as rest_exceptions
 
 from merchant import models as merchant_models
+from product import models as product_models
 from merchant import serializer as merchant_serializer
 from address.mixins import ActionSpecificSerializerMixin
 from address import models as address_models
@@ -49,6 +50,10 @@ class MerchantView(
                 queryset = merchant_models.Merchant.objects.none()
             else:
                 queryset = queryset.filter(serve_zip_code__in=[address.first().id])
+        # filter for the merchant query search
+        keyword = self.request.query_params.get('keyword', None)
+        if keyword:
+            queryset = queryset.filter(store_name__contains=keyword.lower())
         return queryset
 
 
@@ -64,6 +69,18 @@ class MerchantProductView(GenericViewSet):
         category_id = self.request.query_params.get('category', None)
         if category_id is not None:
             queryset = queryset.filter(product__category__id=category_id)
+        # filter for product keyword. product_keyword is the ID for the ProductKeyword Table
+        product_keyword = self.request.query_params.get('product_keyword', None)
+        try:
+            product_keyword = int(product_keyword)
+        except ValueError:
+            product_keyword = None
+        if product_keyword:
+            product_keyword = product_models.ProductKeyword.objects.filter(id=product_keyword)
+            if product_keyword.exists():
+                queryset = queryset.filter(
+                    product__id__in=product_keyword.first().products.all().values_list('id', flat=True)
+                )
         return queryset
 
     def get_object(self):
@@ -78,7 +95,9 @@ class MerchantProductView(GenericViewSet):
         if zip_code:
             address = address_models.AddressDetail.objects.filter(zip_code=zip_code)
             if not address.exists():
-                raise rest_exceptions.NotFound('Zip Code with value {} not exists'.format(zip_code))
+                raise rest_exceptions.NotFound('Merchant with ID {} not serve in zip code {}'.format(
+                    self.kwargs.get(self.lookup_field), zip_code)
+                )
             if (
                 address.exists() and not
                 merchant_models.Merchant.objects.filter(

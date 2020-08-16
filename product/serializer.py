@@ -43,3 +43,12 @@ class ProductPersonalitySerializer(rest_serializers.ModelSerializer):
     class Meta:
         model = product_models.ProductPersonality
         fields = ('id', 'quantity', 'unit',)
+
+
+class ProductKeywordSerializer(rest_serializers.ModelSerializer):
+    """
+    Serializer for product category
+    """
+    class Meta:
+        model = product_models.ProductKeyword
+        fields = ('id', 'name',)

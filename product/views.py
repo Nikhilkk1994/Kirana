@@ -14,3 +14,20 @@ class CategoryView(rest_mixins.ListModelMixin, GenericViewSet):
     queryset = product_models.Category.objects.all()
     pagination_class = MerchantProductsPagination
 
+
+class ProductKeywordSearch(GenericViewSet, rest_mixins.ListModelMixin):
+    """
+    View for the Product Keyword
+    """
+    serializer_class = product_serializer.ProductKeywordSerializer
+    pagination_class = None
+
+    def get_queryset(self):
+        """
+        queryset for product keyword
+        """
+        queryset = product_models.ProductKeyword.objects.all()
+        keyword = self.request.query_params.get('keyword', None)
+        if keyword:
+            queryset = queryset.filter(name__contains=keyword.lower())
+        return queryset

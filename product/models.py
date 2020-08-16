@@ -24,6 +24,25 @@ class Category(models.Model):
         super(Category, self).save(force_insert, force_update, using, update_fields)
 
 
+class ProductKeyword(models.Model):
+    """
+    Keywords for product
+    """
+    name = models.CharField(_('Product Keyword'), max_length=50, unique=True)
+
+    class Meta:
+        verbose_name = _('Product Keyword')
+        verbose_name_plural = _('Product Keywords')
+
+    def __str__(self):
+        return self.name
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        self.name = self.name.lower()
+        super(ProductKeyword, self).save(force_insert, force_update, using, update_fields)
+
+
 class Product(models.Model):
     """
     Model to create the product table
@@ -32,6 +51,7 @@ class Product(models.Model):
     description = models.CharField(_('Description'), max_length=50, blank=True, null=True)
     category = models.ManyToManyField(Category, related_name='product')
     image = models.ImageField(upload_to='media/product/', null=True, max_length=255)
+    keywords = models.ManyToManyField(ProductKeyword, related_name='products', blank=True)
 
     class Meta:
         verbose_name = _('Product')
