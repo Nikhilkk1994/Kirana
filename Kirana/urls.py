@@ -27,6 +27,7 @@ from customer import urls as customer_urls
 from address import urls as address_urls
 from product import urls as product_category
 from merchant import urls as merchant_urls
+from order import urls as order_urls
 
 
 schema_view = get_schema_view(
@@ -45,6 +46,7 @@ urlpatterns = [
     url(r'^api/', include(address_urls)),
     url(r'^api/', include(product_category)),
     url(r'^api/', include(merchant_urls)),
+    url(r'^api/', include(order_urls)),
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
