@@ -32,6 +32,11 @@ class CartCheckOut(GenericViewSet, rest_mixins.CreateModelMixin):
         merchant = merchant_models.Merchant.objects.filter(id=kwargs.get('pk'))
         if not merchant.exists():
             raise rest_exceptions.ValidationError('Merchant with ID {} not exists'.format(kwargs.get('pk')))
+        zip_code = self.request.query_params.get('zip_code', None)
+        if zip_code and not merchant.first().serve_zip_code.filter(zip_code=zip_code).exists():
+            raise rest_exceptions.ValidationError('Merchant with ID {} not serve in zip code {}'.format(
+                kwargs.get('pk'), zip_code)
+            )
         context = self.get_serializer_context()
         serializer = self.get_serializer(data=request.data, many=True, context=context)
         serializer.is_valid(raise_exception=True)
