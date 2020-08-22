@@ -6,7 +6,7 @@ from order import views as api_views
 
 router = routers.SimpleRouter()
 
-router.register(r'checkout', api_views.CartCheckOut, basename='cart_checkout')
+router.register(r'cart', api_views.CartCheckOut, basename='cart_checkout')
 
 urlpatterns = []
 
