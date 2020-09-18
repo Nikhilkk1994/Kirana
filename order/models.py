@@ -3,7 +3,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from customer import models as customer_models
 from merchant import models as merchant_models
-from product import models as product_models
 from delivery import models as delivery_models
 from address import models as address_models
 

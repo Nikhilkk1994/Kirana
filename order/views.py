@@ -1,9 +1,11 @@
-from rest_framework import mixins as rest_mixins
-from rest_framework import status as http_status
+from rest_framework import (
+    mixins as rest_mixins,
+    status as http_status,
+    exceptions as rest_exceptions,
+)
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.viewsets import GenericViewSet
-from rest_framework import exceptions as rest_exceptions
 
 from order import serializer as order_serializer
 from merchant import views as merchant_views
