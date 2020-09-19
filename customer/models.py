@@ -13,7 +13,7 @@ from address.models import Address
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    mobile = models.PositiveIntegerField(_('mobile number'), unique=True, validators=[validate_mobile])
+    mobile = models.BigIntegerField(_('mobile number'), unique=True, validators=[validate_mobile])
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
     is_staff = models.BooleanField(

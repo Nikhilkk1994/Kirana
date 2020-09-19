@@ -13,7 +13,7 @@ class Merchant(models.Model):
     """
     owner = models.OneToOneField(customer_models.User, on_delete=models.CASCADE)
     store_name = models.CharField(_('Store Name'), max_length=50, unique=True)
-    mobile = models.IntegerField(_('Mobile Number of Shop'), validators=[validate_mobile])
+    mobile = models.BigIntegerField(_('Mobile Number of Shop'), validators=[validate_mobile])
     address = models.OneToOneField(address_models.Address, on_delete=models.CASCADE)
     serve_zip_code = models.ManyToManyField(address_models.AddressDetail, related_name='merchants', blank=True)
     image = models.ImageField(max_length=255, upload_to='media/merchant/', blank=True, null=True)
