@@ -48,7 +48,9 @@ class UserAddressView(
         serializer = self.get_serializer(instance, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        serializer = address_serializer.UserAddressSerializer(self.get_queryset(), many=True)
+        serializer = address_serializer.UserAddressSerializer(
+            address_models.Address.objects.filter(user__id=self.request.user.id), many=True
+        )
         return Response(serializer.data, status=http_status.HTTP_201_CREATED)
 
     def destroy(self, request, *args, **kwargs):

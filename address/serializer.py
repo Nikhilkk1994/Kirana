@@ -1,5 +1,4 @@
 from rest_framework import serializers as rest_serializers
-from rest_framework import exceptions as rest_exceptions
 
 from address import models  as address_models
 from customer import models as customer_models
