@@ -120,8 +120,8 @@ DATABASES = {
         'NAME': 'checkout',
         'USER': 'nikhil',
         'PASSWORD': '123456',
-        'HOST': 'localhost',
-        'PORT': '',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
