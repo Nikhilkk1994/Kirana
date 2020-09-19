@@ -10,7 +10,7 @@ class UserAddressDetailSerializer(rest_serializers.ModelSerializer):
     """
     class Meta:
         model = address_models.AddressDetail
-        fields = ('state', 'country', 'zip_code',)
+        fields = ('city', 'state', 'country', 'zip_code',)
 
 
 class UserAddressSerializer(rest_serializers.ModelSerializer):
@@ -21,7 +21,7 @@ class UserAddressSerializer(rest_serializers.ModelSerializer):
 
     class Meta:
         model = address_models.Address
-        fields = ('area_house_number', 'landmark', 'address_detail',)
+        fields = ('id', 'area_house_number', 'landmark', 'address_detail',)
 
 
 class UserAddressCreateSerializer(rest_serializers.Serializer):
@@ -30,6 +30,7 @@ class UserAddressCreateSerializer(rest_serializers.Serializer):
     """
     area_house_number = rest_serializers.CharField(help_text='address details', max_length=50)
     landmark = rest_serializers.CharField(help_text='landmark', max_length=50, required=False)
+    city = rest_serializers.CharField(help_text='city', max_length=50)
     state = rest_serializers.CharField(help_text='state', max_length=50)
     country = rest_serializers.CharField(help_text='country', max_length=50)
     zip_code = rest_serializers.CharField(help_text='zip code', max_length=50)
@@ -42,7 +43,7 @@ class UserAddressCreateSerializer(rest_serializers.Serializer):
         """
         address_detail = address_models.AddressDetail.objects.get_or_create(
             state=validated_data.get('state').lower(), country=validated_data.get('country').lower(),
-            zip_code=validated_data.get('zip_code').lower()
+            zip_code=validated_data.get('zip_code').lower(), city=validated_data.get('city').lower()
         )
         print(address_detail)
         address = address_models.Address.objects.get_or_create(

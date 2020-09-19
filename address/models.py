@@ -3,6 +3,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class AddressDetail(models.Model):
+    city = models.CharField(_('City'), max_length=30)
     state = models.CharField(_('State'), max_length=30)
     country = models.CharField(_('Country'), max_length=30)
     zip_code = models.CharField(_('Zip Code'), max_length=30)
