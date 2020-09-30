@@ -70,7 +70,7 @@ class MerchantProductView(GenericViewSet):
         if category_id is not None:
             queryset = queryset.filter(product__category__id=category_id)
         # filter for product keyword. product_keyword is the ID for the ProductKeyword Table
-        product_keyword = self.request.query_params.get('product_keyword', None)
+        product_keyword = self.request.query_params.get('product_keyword', 0)
         try:
             product_keyword = int(product_keyword)
         except ValueError:
