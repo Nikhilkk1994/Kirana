@@ -22,10 +22,15 @@ class CartCheckoutListSerializer(rest_serializers.ListSerializer):
             merchant_product__merchant=self.context.get('merchant_id'),
         ).values('inventory', 'merchant_product_id', 'product_personality_id'))
         # validate the product Inventory
+        count = 0
         for data in product:
             key = ''.join([str(data['merchant_product_id']), str(data['product_personality_id'])])
-            if product_dict[key] <= data['inventory']:
-                data['inventory'] = product_dict[key]
+            if product_dict.get(key, None):
+                if product_dict[key] <= data['inventory']:
+                    data['inventory'] = product_dict[key]
+            else:
+                product.pop(count)
+            count = count + 1
         return product
 
 

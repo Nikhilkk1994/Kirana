@@ -1,5 +1,4 @@
 from rest_framework import (
-    mixins as rest_mixins,
     status as http_status,
     exceptions as rest_exceptions,
 )
@@ -8,17 +7,16 @@ from rest_framework.decorators import action
 from rest_framework.viewsets import GenericViewSet
 
 from order import serializer as order_serializer
-from merchant import views as merchant_views
 from merchant import  models as merchant_models
 
 
-class CartCheckOut(GenericViewSet, rest_mixins.CreateModelMixin):
+class CartCheckOut(GenericViewSet):
     """
     ViewSet for Cart Checkout
     """
     # permission_classes = (rest_permissions.IsAuthenticated,)
     serializer_class = order_serializer.CartCheckoutSerializer
-    pagination_class = merchant_views.MerchantProductsPagination
+    pagination_class = None
 
     def get_serializer_context(self):
         return {
